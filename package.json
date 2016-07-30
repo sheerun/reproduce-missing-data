@@ -1,8 +1,44 @@
 {
   "name": "reproduce-missing-data",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.0",
+  "author": "mapzen",
+  "description": "Open-source geo-coder & reverse geo-coder",
+  "homepage": "https://github.com/mapzen/pelias-geonames",
+  "license": "MIT",
+  "scripts": {
+    "download_metadata": "mkdir -p metadata && ./bin/pelias-geonames -m",
+    "functional": "node test/functional.js | tap-dot",
+    "import": "./bin/pelias-geonames",
+    "lint": "jshint .",
+    "postinstall": "npm run download_metadata",
+    "test": "npm run units",
+    "travis": "npm test && npm run functional",
+    "units": "node test/units.js | tap-dot",
+    "validate": "npm ls",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "bin": {
+    "geonames": "./bin/pelias-geonames"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapzen/pelias-geonames.git"
+  },
+  "keywords": [
+    "pelias",
+    "geonames",
+    "geocoder",
+    "osm",
+    "maps"
+  ],
+  "bugs": {
+    "url": "https://github.com/mapzen/pelias-geonames/issues"
+  },
+  "engines": {
+    "node": ">=0.10.26",
+    "npm": ">=1.4.3",
+    "elasticsearch": ">=1.1.1"
+  },
   "dependencies": {
     "JSONStream": "^1.0.7",
     "cli-table": "^0.3.0",
@@ -29,5 +65,10 @@
     "tap-dot": "^1.0.1",
     "tape": "^4.4.0",
     "semantic-release": "^4.3.5"
-  }
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }
